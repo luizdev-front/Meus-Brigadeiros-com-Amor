@@ -187,13 +187,24 @@ function addCarrinho(nome, preco) {
   atualizarCarrinho();
 }
 
+function removerItem(index) {
+  total -= carrinho[index].preco;
+  carrinho.splice(index, 1);
+  atualizarCarrinho();
+}
+
 function atualizarCarrinho() {
   const lista = document.getElementById("lista");
   lista.innerHTML = "";
 
-  carrinho.forEach(item => {
+  carrinho.forEach((item, index) => {
     const li = document.createElement("li");
-    li.textContent = item.nome + " - R$ " + item.preco.toFixed(2);
+
+    li.innerHTML = `
+      ${item.nome} - R$ ${item.preco.toFixed(2)}
+      <button onclick="removerItem(${index})" style="margin-left:10px; background:#ff4d4d;">❌</button>
+    `;
+
     lista.appendChild(li);
   });
 
